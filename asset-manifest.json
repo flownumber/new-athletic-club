@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/new-athletic-club/static/css/main.76b4e2df.css",
+    "main.js": "/new-athletic-club/static/js/main.d4300d7c.js",
+    "static/js/453.19504932.chunk.js": "/new-athletic-club/static/js/453.19504932.chunk.js",
+    "index.html": "/new-athletic-club/index.html",
+    "main.76b4e2df.css.map": "/new-athletic-club/static/css/main.76b4e2df.css.map",
+    "main.d4300d7c.js.map": "/new-athletic-club/static/js/main.d4300d7c.js.map",
+    "453.19504932.chunk.js.map": "/new-athletic-club/static/js/453.19504932.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.76b4e2df.css",
+    "static/js/main.d4300d7c.js"
+  ]
+}
