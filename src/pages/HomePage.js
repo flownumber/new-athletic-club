@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import usersData from '../data/users.json';
+import usersData from '../data/users';
 import './App.css';
-import logo from '../img/logo.png'; // Importa il logo
 
 function HomePage() {
   const [users, setUsers] = useState([]);
@@ -13,44 +12,25 @@ function HomePage() {
   const [deleteUserName, setDeleteUserName] = useState('');
 
   useEffect(() => {
-    setUsers(usersData);
+    setUsers(usersData);  // Carica i dati degli utenti
   }, []);
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
+  // Funzione per aggiungere o rimuovere caffè
   const adjustCaffe = (adjustment) => {
     if (selectedUser) {
-      const updatedCredit = selectedUser.credit + adjustment;
-      setSelectedUser({ ...selectedUser, credit: Math.max(updatedCredit, 0) });
+      const updatedCredit = Math.max(selectedUser.credit + adjustment, 0);
+      setSelectedUser({ ...selectedUser, credit: updatedCredit });
     }
   };
 
-  const getRandomUserImage = () => {
-    const images = ['prova.png', 'prova1.png', 'prova2.png', 'prova3.png', 'prova4.png', 'prova5.png'];
-    return `/img/user/${images[Math.floor(Math.random() * images.length)]}`;
+  const handleSaveChanges = () => {
+    setUsers(users.map(user =>
+      user.id === selectedUser.id ? selectedUser : user
+    ));
+    setSelectedUser(null); // Deseleziona l'utente dopo il salvataggio
   };
-
-  const handleCreateUser = () => {
-    if (newUser.name && newUser.credit >= 0) {
-      const newId = users.length + 1;
-      const newUserWithImage = { ...newUser, id: newId, image: getRandomUserImage() };
-      setUsers([...users, newUserWithImage]);
-      setCreateModalOpen(false);
-      setNewUser({ name: '', credit: 0 });
-    }
-  };
-
-  const handleDeleteUser = () => {
-    const updatedUsers = users.filter(user => user.name.toLowerCase() !== deleteUserName.toLowerCase());
-    setUsers(updatedUsers);
-    setDeleteModalOpen(false);
-    setDeleteUserName('');
-    if (selectedUser && selectedUser.name.toLowerCase() === deleteUserName.toLowerCase()) {
-      setSelectedUser(null);
-    }
-  };
-
-  const coffeeEquivalent = (credit) => (credit / 0.7).toFixed(2);
 
   const handleSelectUser = (user) => setSelectedUser(user);
 
@@ -58,7 +38,7 @@ function HomePage() {
     <div className="homepage">
       <header className="header">
         <a href="/" className="logo-link">
-          <img src={logo} alt="Logo Azienda" className="logo" />
+          <img src={require("../img/logo.png")} alt="Logo Azienda" className="logo" />
         </a>
         <h1>Caffeinomani di New Athletic Club</h1>
         <button className="button" onClick={() => setCreateModalOpen(true)}>Crea Utente</button>
@@ -79,7 +59,7 @@ function HomePage() {
             <img src={user.image} alt="user" className="user-image" />
             <h3>{user.name}</h3>
             <p>Credito: €{user.credit.toFixed(2)}</p>
-            <p>Caffè: {coffeeEquivalent(user.credit)}</p>
+            <p>Caffè: {(user.credit / 0.7).toFixed(2)}</p>
           </div>
         ))}
       </div>
@@ -88,7 +68,7 @@ function HomePage() {
         <div className="user-details">
           <h2>Dettagli di {selectedUser.name}</h2>
           <p>Credito attuale: €{selectedUser.credit.toFixed(2)}</p>
-          <p>Caffè: {coffeeEquivalent(selectedUser.credit)}</p>
+          <p>Caffè: {(selectedUser.credit / 0.7).toFixed(2)}</p>
           <button onClick={() => adjustCaffe(0.7)} className="button">Aggiungi 1 Caffè</button>
           <button onClick={() => adjustCaffe(-0.7)} className="button">Rimuovi 1 Caffè</button>
           <input
@@ -97,7 +77,7 @@ function HomePage() {
             onChange={(e) => setSelectedUser({ ...selectedUser, credit: parseFloat(e.target.value) })}
             className="credit-input"
           />
-          <button onClick={() => setUsers(users.map(u => u.id === selectedUser.id ? selectedUser : u))} className="button">Salva Modifiche</button>
+          <button onClick={handleSaveChanges} className="button">Salva Modifiche</button>
         </div>
       )}
 
