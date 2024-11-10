@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import usersData from './data/users.json';
 import HomePage from './pages/HomePage';
-import './App.css';
+import './pages/App.css';
 
 function App() {
   const [users, setUsers] = useState(usersData);
