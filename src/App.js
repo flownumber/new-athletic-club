@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import usersData from './data/users.json';
+import usersData from './data/users.js';
 import HomePage from './pages/HomePage';
 import './pages/App.css';
 
