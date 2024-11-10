@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import usersData from '../data/users.json';
 import './App.css';
+import logo from '../img/logo.png'; // Importa il logo
 
 function HomePage() {
   const [users, setUsers] = useState([]);
@@ -9,7 +10,7 @@ function HomePage() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [newUser, setNewUser] = useState({ name: '', credit: 0 });
   const [selectedUser, setSelectedUser] = useState(null);
-  const [deleteUserName, setDeleteUserName] = useState(''); // Stato per il nome dell'utente da eliminare
+  const [deleteUserName, setDeleteUserName] = useState('');
 
   useEffect(() => {
     setUsers(usersData);
@@ -17,7 +18,6 @@ function HomePage() {
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
-  // Funzione per aggiungere o rimuovere caffè
   const adjustCaffe = (adjustment) => {
     if (selectedUser) {
       const updatedCredit = selectedUser.credit + adjustment;
@@ -25,10 +25,9 @@ function HomePage() {
     }
   };
 
-  // Funzione per selezionare un'immagine casuale per un nuovo utente
   const getRandomUserImage = () => {
     const images = ['prova.png', 'prova1.png', 'prova2.png', 'prova3.png', 'prova4.png', 'prova5.png'];
-    return `../img/user/${images[Math.floor(Math.random() * images.length)]}`;
+    return `/img/user/${images[Math.floor(Math.random() * images.length)]}`;
   };
 
   const handleCreateUser = () => {
@@ -41,12 +40,11 @@ function HomePage() {
     }
   };
 
-  // Funzione per eliminare l'utente basato sul nome inserito
   const handleDeleteUser = () => {
     const updatedUsers = users.filter(user => user.name.toLowerCase() !== deleteUserName.toLowerCase());
     setUsers(updatedUsers);
     setDeleteModalOpen(false);
-    setDeleteUserName(''); // Reset del campo di input
+    setDeleteUserName('');
     if (selectedUser && selectedUser.name.toLowerCase() === deleteUserName.toLowerCase()) {
       setSelectedUser(null);
     }
@@ -60,7 +58,7 @@ function HomePage() {
     <div className="homepage">
       <header className="header">
         <a href="/" className="logo-link">
-          <img src="../img/logo.png" alt="Logo Azienda" className="logo" />
+          <img src={logo} alt="Logo Azienda" className="logo" />
         </a>
         <h1>Caffeinomani di New Athletic Club</h1>
         <button className="button" onClick={() => setCreateModalOpen(true)}>Crea Utente</button>
