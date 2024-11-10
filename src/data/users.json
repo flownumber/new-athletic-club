@@ -1,0 +1,6 @@
+[
+    { "id": 1, "name": "Marco", "credit": 10.5, "image": "../img/user/prova.png" },
+    { "id": 2, "name": "Luca", "credit": 15.2, "image": "../img/user/prova1.png" },
+    { "id": 3, "name": "Sara", "credit": 20.0, "image": "../img/user/prova2.png" }
+  ]
+  
